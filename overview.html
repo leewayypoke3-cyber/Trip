@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1f2937">
+<title>전체 일정 — 후쿠오카 3박 4일</title>
+<style>
+:root{
+  --header-h:60px;
+}
+*{box-sizing:border-box}
+body,html{margin:0;padding:0;height:100%;font-family:'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;background:#f3f4f6}
+
+/* 헤더 */
+.hdr{position:sticky;top:0;left:0;right:0;background:#1f2937;color:#fff;padding:8px 16px;padding-top:calc(8px + env(safe-area-inset-top));z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);display:flex;flex-direction:column;justify-content:center;min-height:calc(var(--header-h) + env(safe-area-inset-top))}
+.hdr h1{margin:0;font-size:15px;font-weight:700;line-height:1.25}
+.hdr p{margin:3px 0 0;font-size:11px;opacity:.85;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 네비게이션 (다른 페이지로) */
+.page-nav{position:sticky;top:calc(var(--header-h) + env(safe-area-inset-top));left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);box-shadow:0 1px 3px rgba(0,0,0,.06);z-index:99;padding:8px 12px;display:flex;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.page-nav a{flex:none;padding:6px 12px;font-size:11.5px;font-weight:600;color:#6b7280;text-decoration:none;border-radius:14px;transition:all .15s;border:1px solid #e5e7eb;background:#fff;white-space:nowrap}
+.page-nav a.active{background:#1f2937;color:#fff;border-color:#1f2937}
+.page-nav a.d1{color:#d97706}
+.page-nav a.d2{color:#16a34a}
+.page-nav a.d3{color:#2563eb}
+
+/* Day 점프 버튼 (SVG 내부 영역으로) */
+.jump-nav{position:sticky;top:calc(var(--header-h) + env(safe-area-inset-top) + 45px);background:rgba(255,255,255,.96);backdrop-filter:blur(8px);z-index:98;padding:8px 12px;display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;border-bottom:1px solid #e5e7eb}
+.jump-nav button{flex:none;padding:6px 12px;font-size:11px;font-weight:700;border:none;border-radius:12px;cursor:pointer;color:#fff;white-space:nowrap;font-family:inherit}
+.jump-nav button:active{transform:scale(.96)}
+.jump-d1{background:#d97706}
+.jump-d2{background:#16a34a}
+.jump-d3{background:#2563eb}
+.jump-d4{background:#475569}
+
+/* 안내 토스트 */
+.tip{position:fixed;left:12px;right:12px;top:calc(var(--header-h) + env(safe-area-inset-top) + 100px);background:#1f2937;color:#fff;padding:10px 14px;border-radius:10px;font-size:12px;line-height:1.5;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.2);display:flex;justify-content:space-between;align-items:center;gap:10px;animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.tip .close-x{flex:none;background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:0 4px;font-family:inherit}
+.tip-text{flex:1}
+.tip-text b{color:#fbbf24}
+
+/* SVG 컨테이너 — 가로 스크롤 가능 */
+.svg-wrap{padding:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.svg-wrap svg{display:block;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+
+/* 모바일: SVG는 화면 폭에 맞추되, 핀치 줌으로 확대 */
+@media(max-width:700px){
+  .svg-wrap svg{width:100%;height:auto;min-width:100%}
+}
+
+/* 데스크탑: SVG 원본 비율 유지하되 컨테이너 폭 제한 */
+@media(min-width:701px){
+  :root{--header-h:64px}
+  .hdr h1{font-size:18px}
+  .hdr p{font-size:12px}
+  .svg-wrap{padding:20px;max-width:1540px;margin:0 auto}
+  .svg-wrap svg{width:100%;height:auto}
+  .jump-nav{justify-content:center}
+}
+
+/* 푸터 */
+.footer{padding:16px;text-align:center;color:#9ca3af;font-size:11px;line-height:1.5}
+.footer a{color:#6b7280;text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <h1>📋 전체 일정 — 후쿠오카 3박 4일</h1>
+  <p>5/2(토) ~ 5/5(화) · 일본 골든위크 · 도미인 시리즈</p>
+</header>
+
+<nav class="page-nav">
+  <a href="index.html">🏠</a>
+  <a href="overview.html" class="active">📋 전체</a>
+  <a href="day1_map.html" class="d1">Day 1</a>
+  <a href="day2_map.html" class="d2">Day 2</a>
+  <a href="day3_map.html" class="d3">Day 3</a>
+</nav>
+
+<div class="jump-nav">
+  <button class="jump-d1" onclick="jumpTo(90)">Day 1 (5/2)</button>
+  <button class="jump-d2" onclick="jumpTo(370)">Day 2 (5/3)</button>
+  <button class="jump-d3" onclick="jumpTo(700)">Day 3 (5/4)</button>
+  <button class="jump-d4" onclick="jumpTo(1100)">Day 4 (5/5)</button>
+</div>
+
+<div class="tip" id="tip">
+  <div class="tip-text">💡 <b>핀치 줌</b>으로 확대해서 보세요. 가로 모드 권장.</div>
+  <button class="close-x" onclick="closeTip()" aria-label="닫기">×</button>
+</div>
+
+<div class="svg-wrap" id="wrap">
+  <!-- SVG 인라인 임베드 — 외부 파일 로딩 없이 즉시 표시 -->
+  <svg id="overview" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1380" font-family="'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif">
+<defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- ==== HEADER ==== -->
+  <rect width="1500" height="90" fill="#1f2937"/>
+  <text x="40" y="42" font-size="28" font-weight="700" fill="white">🌸 후쿠오카 3박 4일 여행 전체 일정</text>
+  <text x="40" y="68" font-size="14" fill="#cbd5e1">5/2(토) ~ 5/5(화) · 일본 골든위크 · 2명 · 도미인 시리즈 숙박</text>
+  <text x="1460" y="42" font-size="13" fill="#cbd5e1" text-anchor="end">✈ 부산 PUS ↔ 후쿠오카 FUK</text>
+  <text x="1460" y="64" font-size="11" fill="#94a3b8" text-anchor="end">출국 ZE943 · 귀국 BX141</text>
+
+  <!-- ==== DAY 1 (y: 90~370) ==== -->
+  <rect x="0" y="90" width="1500" height="280" fill="#fef8f0"/>
+  <rect x="0" y="90" width="1500" height="42" fill="#d97706"/>
+  <text x="40" y="118" font-size="18" font-weight="700" fill="white">Day 1 · 5/2 (토) — 하카타 워밍업</text>
+  <text x="1460" y="117" font-size="12" fill="#fff5e1" text-anchor="end">도착 + 호텔 체크인 + 캐널시티 + 모츠나베 + 온천</text>
+
+  <!-- Route line -->
+  <line x1="180" y1="240" x2="1320" y2="240" stroke="#fbbf24" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+
+  <!-- Transport labels -->
+  <text x="320" y="225" text-anchor="middle" font-size="10" fill="#666">🚇 지하철 5분</text>
+  <text x="555" y="225" text-anchor="middle" font-size="10" fill="#666">🚶 도보 8분</text>
+  <text x="790" y="225" text-anchor="middle" font-size="10" fill="#666">🚶 도보 5분</text>
+  <text x="1080" y="225" text-anchor="middle" font-size="10" fill="#666">🚶 도보 5분</text>
+
+  <!-- 5 markers Day 1 -->
+  <g transform="translate(180,240)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">16:00</text><circle r="26" fill="#3b82f6" stroke="white" stroke-width="3"/><text y="6" text-anchor="middle" font-size="20" fill="white">✈</text><text y="55" text-anchor="middle" font-size="13" font-weight="700">후쿠오카 공항</text><text y="73" text-anchor="middle" font-size="10" fill="#666">국제선 도착</text></g>
+  <g transform="translate(440,240)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">17:00</text><circle r="26" fill="#3b82f6" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="18" fill="white">🚉</text><text y="55" text-anchor="middle" font-size="13" font-weight="700">하카타역</text><text y="73" text-anchor="middle" font-size="10" fill="#666">JR · 지하철 환승</text></g>
+  <g transform="translate(670,240)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">17:30</text><circle r="26" fill="#10b981" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="18" fill="white">🏨</text><text y="55" text-anchor="middle" font-size="13" font-weight="700">도미인 하카타 기온</text><text y="73" text-anchor="middle" font-size="10" fill="#666">체크인 + 짐 풀기</text></g>
+  <g transform="translate(910,240)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">18:00~21:00</text><circle r="32" fill="#ec4899" stroke="white" stroke-width="3"/><text y="8" text-anchor="middle" font-size="22" fill="white">🛍</text><text y="62" text-anchor="middle" font-size="13" font-weight="700">캐널시티 하카타</text><text y="80" text-anchor="middle" font-size="10" fill="#666">1F 오니츠카 타이거 · 5F 🍲 모츠나베 오오야마</text></g>
+  <g transform="translate(1250,240)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">21:30~</text><circle r="26" fill="#10b981" stroke="white" stroke-width="3" stroke-dasharray="4 2"/><text y="7" text-anchor="middle" font-size="18" fill="white">♨</text><text y="55" text-anchor="middle" font-size="13" font-weight="700">호텔 복귀</text><text y="73" text-anchor="middle" font-size="10" fill="#666">야식 라멘 + 천연온천</text></g>
+
+  <!-- ==== DAY 2 (y: 370~700) ==== -->
+  <rect x="0" y="370" width="1500" height="330" fill="#f0fdf4"/>
+  <rect x="0" y="370" width="1500" height="42" fill="#16a34a"/>
+  <text x="40" y="398" font-size="18" font-weight="700" fill="white">Day 2 · 5/3 (일) — 유후인 + 벳푸 투어</text>
+  <text x="1460" y="397" font-size="12" fill="#dcfce7" text-anchor="end">trip.com 92461101 콤보 투어 · 점심 자유식</text>
+
+  <line x1="120" y1="540" x2="1380" y2="540" stroke="#86efac" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+
+  <text x="180" y="525" text-anchor="middle" font-size="10" fill="#666">🚶 도보</text>
+  <text x="290" y="525" text-anchor="middle" font-size="10" fill="#16a34a">🚌 투어</text>
+  <text x="450" y="525" text-anchor="middle" font-size="10" fill="#16a34a">🚌 2시간</text>
+  <text x="640" y="525" text-anchor="middle" font-size="10" fill="#16a34a">🚌 30분</text>
+  <text x="820" y="525" text-anchor="middle" font-size="10" fill="#16a34a">🚌 투어</text>
+  <text x="1030" y="525" text-anchor="middle" font-size="10" fill="#16a34a">🚌 1h20분</text>
+  <text x="1195" y="525" text-anchor="middle" font-size="10" fill="#666">🚶 5분</text>
+  <text x="1280" y="525" text-anchor="middle" font-size="10" fill="#666">🚶 5분</text>
+  <text x="1410" y="525" text-anchor="middle" font-size="10" fill="#666">🚶 5분</text>
+
+  <g transform="translate(110,540)"><text y="-28" text-anchor="middle" font-size="10" fill="#888">07:50</text><circle r="20" fill="#10b981" stroke="white" stroke-width="3"/><text y="6" text-anchor="middle" font-size="14" fill="white">🏨</text><text y="46" text-anchor="middle" font-size="11" font-weight="700">호텔 출발</text><text y="62" text-anchor="middle" font-size="9" fill="#666">기온점</text></g>
+  <g transform="translate(250,540)"><text y="-28" text-anchor="middle" font-size="10" fill="#888">08:10~08:30</text><circle r="22" fill="#3b82f6" stroke="white" stroke-width="3"/><text y="6" text-anchor="middle" font-size="14" fill="white">🏪</text><text y="48" text-anchor="middle" font-size="11" font-weight="700">⭐ 로손 오리엔탈 집결</text><text y="64" text-anchor="middle" font-size="9" fill="#666">빵🥐 + 커피☕ 픽업</text></g>
+  <g transform="translate(380,540)"><text y="-28" text-anchor="middle" font-size="10" fill="#888">09:10~10:40</text><circle r="26" fill="#8b5cf6" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="16" fill="white">⛩</text><text y="54" text-anchor="middle" font-size="11" font-weight="700">⭐ 다자이후 텐만구</text><text y="70" text-anchor="middle" font-size="9" fill="#666">봄꽃 명소 19위</text></g>
+  <g transform="translate(550,540)"><text y="-28" text-anchor="middle" font-size="10" fill="#888">12:40~13:40</text><circle r="26" fill="#16a34a" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="16" fill="white">🚠</text><text y="54" text-anchor="middle" font-size="11" font-weight="700">벳푸 로프웨이</text><text y="70" text-anchor="middle" font-size="9" fill="#666">츠루미다케 4.3★</text></g>
+  <g transform="translate(740,540)"><text y="-28" text-anchor="middle" font-size="10" fill="#888">14:10~15:00</text><circle r="26" fill="#ef4444" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="16" fill="white">🍴</text><text y="54" text-anchor="middle" font-size="11" font-weight="700">⭐ 점심: 나고미</text><text y="70" text-anchor="middle" font-size="9" fill="#666">토리텐 (자비 부담)</text></g>
+  <g transform="translate(910,540)"><text y="-28" text-anchor="middle" font-size="10" fill="#888">15:00~17:00</text><circle r="30" fill="#8b5cf6" stroke="white" stroke-width="3"/><text y="8" text-anchor="middle" font-size="20" fill="white">🌸</text><text y="60" text-anchor="middle" font-size="11" font-weight="700">유후인 6곳 순회</text><text y="76" text-anchor="middle" font-size="9" fill="#666">긴린호·쇼와관·산수이칸·플로랄·마메시바·가와카미</text></g>
+  <g transform="translate(1150,540)"><text y="-28" text-anchor="middle" font-size="10" fill="#888">18:20</text><circle r="20" fill="#3b82f6" stroke="white" stroke-width="3"/><text y="6" text-anchor="middle" font-size="13" fill="white">🚉</text><text y="46" text-anchor="middle" font-size="10" font-weight="700">⭐ 하카타역 해산</text><text y="62" text-anchor="middle" font-size="9" fill="#666">투어 종료</text></g>
+  <g transform="translate(1240,540)"><text y="-28" text-anchor="middle" font-size="10" fill="#888">18:25~19:10</text><circle r="20" fill="#dc2626" stroke="white" stroke-width="3"/><text y="6" text-anchor="middle" font-size="13" fill="white">🍜</text><text y="46" text-anchor="middle" font-size="10" font-weight="700">라멘 스타디움</text><text y="62" text-anchor="middle" font-size="9" fill="#666">캐널시티 5F · 즉흥</text></g>
+  <g transform="translate(1340,540)"><text y="-28" text-anchor="middle" font-size="10" fill="#888">19:30~21:30</text><circle r="22" fill="#d97706" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="14" fill="white">🏮</text><text y="50" text-anchor="middle" font-size="10" font-weight="700">나카스 야타이</text><text y="65" text-anchor="middle" font-size="9" fill="#666">강변 포장마차</text></g>
+  <g transform="translate(1450,540)"><text y="-28" text-anchor="middle" font-size="10" fill="#888">22:00</text><circle r="16" fill="#10b981" stroke="white" stroke-width="3" stroke-dasharray="4 2"/><text y="5" text-anchor="middle" font-size="11" fill="white">♨</text><text y="38" text-anchor="middle" font-size="10" font-weight="700">호텔</text></g>
+
+  <!-- Note -->
+  <text x="40" y="675" font-size="11" fill="#15803d">💡 투어 공식 일정 — 다자이후 자동 포함 · 18:20 해산 후 라멘 스타디움(즉흥 라멘) → 호텔 짐 정리 → 19:30 야타이 · 5/3↔5/4 저녁 swap</text>
+
+  <!-- ==== DAY 3 (y: 700~1100) ==== -->
+  <rect x="0" y="700" width="1500" height="400" fill="#eff6ff"/>
+  <rect x="0" y="700" width="1500" height="42" fill="#2563eb"/>
+  <text x="40" y="728" font-size="18" font-weight="700" fill="white">Day 3 · 5/4 (월, 헌법기념일) — 후쿠오카 풀데이 ⭐ 메인 데이</text>
+  <text x="1460" y="727" font-size="12" fill="#dbeafe" text-anchor="end">카이센동 + 챠리챠리 자전거 + 야키니쿠 + 재즈 + 라멘</text>
+
+  <!-- 9 markers - need horizontal flow (split row 1 morning/afternoon, row 2 evening) -->
+  <!-- Morning row (y=820) -->
+  <line x1="100" y1="820" x2="1400" y2="820" stroke="#93c5fd" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+  <text x="195" y="805" text-anchor="middle" font-size="10" fill="#666">🚶</text>
+  <text x="320" y="805" text-anchor="middle" font-size="10" fill="#666">🚶</text>
+  <text x="490" y="805" text-anchor="middle" font-size="10" fill="#666">🚇 5분</text>
+  <text x="730" y="805" text-anchor="middle" font-size="11" fill="#f97316" font-weight="700">🚲 자전거</text>
+  <text x="970" y="805" text-anchor="middle" font-size="11" fill="#f97316" font-weight="700">🚲 자전거</text>
+  <text x="1180" y="805" text-anchor="middle" font-size="10" fill="#666">🚶 10분</text>
+  <text x="1330" y="805" text-anchor="middle" font-size="10" fill="#666">🚇</text>
+
+  <g transform="translate(100,820)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">09:30</text><circle r="20" fill="#10b981" stroke="white" stroke-width="3"/><text y="6" text-anchor="middle" font-size="13" fill="white">🏨</text><text y="46" text-anchor="middle" font-size="11" font-weight="700">호텔 체크아웃</text><text y="62" text-anchor="middle" font-size="9" fill="#666">기온점</text></g>
+  <g transform="translate(265,820)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">09:45</text><circle r="20" fill="#10b981" stroke="white" stroke-width="3"/><text y="6" text-anchor="middle" font-size="13" fill="white">🏨</text><text y="46" text-anchor="middle" font-size="11" font-weight="700">짐 맡김</text><text y="62" text-anchor="middle" font-size="9" fill="#666">캐널시티 마에</text></g>
+  <g transform="translate(380,820)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">10:00</text><circle r="20" fill="#ec4899" stroke="white" stroke-width="3"/><text y="6" text-anchor="middle" font-size="13" fill="white">🛍</text><text y="46" text-anchor="middle" font-size="11" font-weight="700">캐널시티</text><text y="62" text-anchor="middle" font-size="9" fill="#666">잠깐 산책</text></g>
+  <g transform="translate(610,820)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">10:30 도착 / 11:00 식사</text><circle r="34" fill="#ef4444" stroke="white" stroke-width="3"/><text y="8" text-anchor="middle" font-size="22" fill="white">🍣</text><text y="62" text-anchor="middle" font-size="13" font-weight="700">⭐ 마구로토 본점 (다이묘)</text><text y="80" text-anchor="middle" font-size="10" fill="#666">카이센동 4.9★ · 1순위 필수 · 점심 후 다이묘 산책</text></g>
+  <g transform="translate(860,820)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">14:30~17:00</text><circle r="30" fill="#16a34a" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="20" fill="white">🌳</text><text y="58" text-anchor="middle" font-size="12" font-weight="700">오호리공원</text><text y="76" text-anchor="middle" font-size="10" fill="#666">4.5★ · 호수 산책 · 자크 카페 (옵션)</text></g>
+  <g transform="translate(1090,820)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">17:30</text><circle r="22" fill="#10b981" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="14" fill="white">🏨</text><text y="52" text-anchor="middle" font-size="11" font-weight="700">호텔 체크인</text><text y="68" text-anchor="middle" font-size="9" fill="#666">캐널시티 마에</text></g>
+  <g transform="translate(1280,820)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">19:00~21:00</text><circle r="28" fill="#ef4444" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="18" fill="white">🥩</text><text y="56" text-anchor="middle" font-size="12" font-weight="700">야키니쿠 이리와</text><text y="73" text-anchor="middle" font-size="10" fill="#666">4.9★ · 한국어 예약 必</text></g>
+
+  <!-- Evening row (y=1010) -->
+  <line x1="500" y1="1010" x2="1300" y2="1010" stroke="#93c5fd" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+  <text x="700" y="995" text-anchor="middle" font-size="10" fill="#666">🚇 5분</text>
+  <text x="1000" y="995" text-anchor="middle" font-size="10" fill="#666">🚶 5분</text>
+  <text x="1230" y="995" text-anchor="middle" font-size="10" fill="#666">🚇</text>
+
+  <text x="380" y="1010" font-size="11" fill="#666" font-style="italic">밤 일정 →</text>
+  <g transform="translate(550,1010)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">21:00</text><circle r="22" fill="#3b82f6" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="14" fill="white">🚇</text><text y="52" text-anchor="middle" font-size="11" font-weight="700">다이묘로 이동</text><text y="68" text-anchor="middle" font-size="9" fill="#666">지하철 5분</text></g>
+  <g transform="translate(840,1010)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">21:30~22:30</text><circle r="28" fill="#f59e0b" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="18" fill="white">☕</text><text y="56" text-anchor="middle" font-size="12" font-weight="700">재즈앤카페 백스테이지</text><text y="73" text-anchor="middle" font-size="10" fill="#666">4.6★ · 라이브 재즈 + 칵테일</text></g>
+  <g transform="translate(1140,1010)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">22:30</text><circle r="28" fill="#dc2626" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="18" fill="white">🍜</text><text y="56" text-anchor="middle" font-size="12" font-weight="700">산미(333) 라멘</text><text y="73" text-anchor="middle" font-size="10" fill="#666">4.5★ · 24시간 영업</text></g>
+  <g transform="translate(1340,1010)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">23:30</text><circle r="22" fill="#10b981" stroke="white" stroke-width="3" stroke-dasharray="4 2"/><text y="7" text-anchor="middle" font-size="14" fill="white">♨</text><text y="52" text-anchor="middle" font-size="11" font-weight="700">호텔 복귀</text><text y="68" text-anchor="middle" font-size="9" fill="#666">온천</text></g>
+
+  <text x="40" y="1080" font-size="11" fill="#1d4ed8">💡 옵션 A 풀코스 · 줄 1시간↑이면 마구로토 하카타점으로 즉시 전환 (지하철 5분)</text>
+
+  <!-- ==== DAY 4 (y: 1100~1330) ==== -->
+  <rect x="0" y="1100" width="1500" height="230" fill="#f8fafc"/>
+  <rect x="0" y="1100" width="1500" height="42" fill="#475569"/>
+  <text x="40" y="1128" font-size="18" font-weight="700" fill="white">Day 4 · 5/5 (화, 어린이날) — 출국</text>
+  <text x="1460" y="1127" font-size="12" fill="#cbd5e1" text-anchor="end">⚠ GW 귀국 러시 — 9시 공항 도착 권장</text>
+
+  <line x1="320" y1="1230" x2="1180" y2="1230" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+  <text x="600" y="1215" text-anchor="middle" font-size="10" fill="#666">🚶 도보 7~10분</text>
+  <text x="900" y="1215" text-anchor="middle" font-size="10" fill="#666">🚇 지하철 5분</text>
+
+  <g transform="translate(320,1230)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">09:30</text><circle r="28" fill="#10b981" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="18" fill="white">🏨</text><text y="58" text-anchor="middle" font-size="13" font-weight="700">도미인 캐널시티 마에</text><text y="76" text-anchor="middle" font-size="10" fill="#666">체크아웃 · 잠깐 산책</text></g>
+  <g transform="translate(750,1230)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">10:00</text><circle r="28" fill="#3b82f6" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="18" fill="white">🚉</text><text y="58" text-anchor="middle" font-size="13" font-weight="700">하카타역</text><text y="76" text-anchor="middle" font-size="10" fill="#666">공항선 지하철 환승</text></g>
+  <g transform="translate(1180,1230)"><text y="-30" text-anchor="middle" font-size="11" fill="#888">10:20 도착 / 11:50 출발</text><circle r="32" fill="#3b82f6" stroke="white" stroke-width="3"/><text y="7" text-anchor="middle" font-size="22" fill="white">✈</text><text y="62" text-anchor="middle" font-size="13" font-weight="700">후쿠오카 공항</text><text y="80" text-anchor="middle" font-size="10" fill="#666">에어부산 BX141 → 13:00 부산 PUS</text></g>
+
+  <!-- ==== FOOTER LEGEND ==== -->
+  <rect x="0" y="1330" width="1500" height="50" fill="#1f2937"/>
+  <text x="40" y="1357" font-size="12" fill="white" font-weight="700">교통:</text>
+  <text x="100" y="1357" font-size="11" fill="#cbd5e1">🚶 도보</text>
+  <text x="170" y="1357" font-size="11" fill="#cbd5e1">🚇 지하철</text>
+  <text x="260" y="1357" font-size="11" fill="#cbd5e1">🚌 투어 버스</text>
+  <text x="370" y="1357" font-size="11" fill="#f97316">🚲 챠리챠리 자전거 (Day 3)</text>
+  <text x="600" y="1357" font-size="11" fill="#cbd5e1">✈ 비행기</text>
+  <text x="720" y="1357" font-size="12" fill="white" font-weight="700">|  카테고리:</text>
+  <text x="850" y="1357" font-size="11" fill="#3b82f6">● 교통</text>
+  <text x="920" y="1357" font-size="11" fill="#10b981">● 호텔</text>
+  <text x="990" y="1357" font-size="11" fill="#ef4444">● 식사</text>
+  <text x="1060" y="1357" font-size="11" fill="#dc2626">● 라멘</text>
+  <text x="1135" y="1357" font-size="11" fill="#d97706">● 야타이</text>
+  <text x="1215" y="1357" font-size="11" fill="#f59e0b">● 카페</text>
+  <text x="1285" y="1357" font-size="11" fill="#16a34a">● 공원</text>
+  <text x="1355" y="1357" font-size="11" fill="#ec4899">● 쇼핑</text>
+  </svg>
+</div>
+
+<div class="footer">
+  자세한 핀 위치와 백업 식당은 <a href="day1_map.html">Day 1</a> · <a href="day2_map.html">Day 2</a> · <a href="day3_map.html">Day 3</a> 지도 참조
+</div>
+
+<script>
+// 안내 토스트 — 5초 후 자동 닫기
+let tipTimer = setTimeout(closeTip, 5000);
+function closeTip(){
+  const t = document.getElementById('tip');
+  if(t){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),300)}
+  clearTimeout(tipTimer);
+}
+
+// Day 점프 — SVG 내부 y좌표를 실제 픽셀 위치로 변환해서 스크롤
+function jumpTo(svgY){
+  const svg = document.getElementById('overview');
+  const wrap = document.getElementById('wrap');
+  const rect = svg.getBoundingClientRect();
+  // SVG viewBox 1380 → 실제 렌더 높이 비율
+  const ratio = rect.height / 1380;
+  const targetY = svgY * ratio + rect.top + window.scrollY;
+  // 헤더(스티키) 높이만큼 보정
+  const headerOffset = document.querySelector('.hdr').offsetHeight + document.querySelector('.page-nav').offsetHeight + document.querySelector('.jump-nav').offsetHeight + 8;
+  window.scrollTo({top: targetY - headerOffset, behavior:'smooth'});
+}
+</script>
+
+</body>
+</html>
